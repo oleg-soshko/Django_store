@@ -1,0 +1,79 @@
+{% extends 'i_shop/base.html' %}
+
+{% block content %}
+
+<section>
+    <nav aria-label="breadcrumb" class="ms-5 mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}"> Главная</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ product.category.get_absolute_url }}">
+                    {{ product.category }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+        </ol>
+    </nav>
+    <div class="container product-cart">
+        <div class="row mt-5">
+            <div class="col-xl-6 col-md-6 col-sm-12 mt-5 img_product">
+                <div id="P-Carousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#P-Carousel" data-bs-slide-to="0"
+                                class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#P-Carousel" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#P-Carousel" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        {% for image in product.productimage_set.all %}
+                            {% if forloop.counter == 1 %}
+                                <div class="carousel-item active">
+                                    <img src="{{ MEDIA_URL }}{{ image.image }}" class="rounded mx-auto d-block" alt="3">
+                                </div>
+                            {% else %}
+                                <div class="carousel-item">
+                                    <img src="{{ MEDIA_URL }}{{ image.image }}" class="rounded mx-auto d-block" alt="3">
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#P-Carousel"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#P-Carousel"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-6 col-sm-12 mt-5">
+                <h1 class="display-5"> {{ product.name}}</h1>
+                <h3 class="pt-1"> Цена: &#8372;{{ product.price }}</h3>
+                <h4 class="pt-2">Характеристика </h4>
+                <p>{{ product.description }}</p>
+                <form action="#" method="post">
+                    <div class="col-4">
+                        <div class="product_quantity">
+                            Количество
+                        </div>
+                        <div class="quantity_form my-3 col-6">
+                            {{ form.csrf_token }}
+                        </div>
+                    </div>
+
+                    <p>
+                        <button type="submit" class="btn btn-success"> Купить</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

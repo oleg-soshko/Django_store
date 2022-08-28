@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block title%} Главная {% endblock%}
+{% block content %}
+<div class="container-fluid my-carousel">
+    <div id="Carousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#Carousel" data-bs-slide-to="0"
+                    class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#Carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#Carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="\static\styles\images\main-carousel-1.jpg" class="d-block w-100" alt="1">
+            </div>
+            <div class="carousel-item">
+                <img src="\static\styles\images\main-carousel-2.jpg" class="d-block w-100" alt="2">
+            </div>
+            <div class="carousel-item">
+                <img src="\static\styles\images\main-carousel-3.jpg" class="d-block w-100" alt="3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#Carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#Carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+<section>
+    <div class="container my-5">
+        <div class="row">
+            {% for product in product.items %}
+            <div class="col-xl-4 col-md-6 col-sm-12 product-item mt-5">
+                <a href="{{ url_for('product', id=product.id) }}">
+            iter        <img src="/static/styles/images/{{ product.id }}_1.jpg" class="rounded mx-auto d-block">
+                </a>
+                <h3 class="text-center mt-2">{{ product.product_name }}</h3>
+                <p class="text-center"> Цена: &#8372; {{ product.price }} </p>
+                <div class="d-flex justify-content-center">
+                    <div class="me-5">
+                        <a href="{{ url_for('product', id=product.id) }}" class="btn btn-success"> Обзор </a>
+                    </div>
+                    <div>
+                        <form action="{{ url_for('cart') }}" method="post">
+                            {{ form.csrf_token }}
+                            {{ form.id(value=product.id) }}
+                            <button type="submit" class="btn btn-success"> Купить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% if product.has_prev %}
+            <a href="{{ url_for('index_new', page_num=product.prev_num) }}"> Previous </a>
+            {% else %}
+            <span> Previous </span>
+            {% endif %}
+            {% for page in product.iter_pages() %}
+            {% if page %}
+            <a href="{{ url_for('index_new', page_num=page) }}"> {{ page }} </a>
+            {% else %}
+            ...
+            {% endif %}
+            {% endfor %}
+            {% if product.has_next %}
+            <a href="{{ url_for('index_new', page_num=product.next_num) }}"> Next </a>
+            {% else %}
+            <span> Next </span>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<div class="pagination mt-5 d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if product.has_prev %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('products_from_category', page_num=product.prev_num) }}">
+                    Previous
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            {% endif %}
+            {% for page in product.iter_pages() %}
+            {% if page == page_num %}
+            <li class="page-item active" aria-current="page">
+                <span class="page-link"> {{ page }} </span>
+            </li>
+            {% elif page %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('products_from_category', page_num=page) }}"> {{ page }} </a>
+            </li>
+            {% else %}
+            ...
+            {% endif %}
+            {% endfor %}
+            {% if product.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('products_from_category', page_num=product.next_num) }}">
+                    Next </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                    Next
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>

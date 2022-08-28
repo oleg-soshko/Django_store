@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title%} {{ product_card[1].product_name}} {% endblock%}
+{% block content %}
+<section>
+    <nav aria-label="breadcrumb" class="ms-5 mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ url_for('index') }}"> Главная </a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ url_for('products_from_category', category_id=product_card[0].id) }}">
+                    {{ product_card[0].category_name }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{ product_card[1].product_name }}</li>
+        </ol>
+    </nav>
+    <div class="container product-cart">
+        <div class="row mt-5">
+            <div class="col-xl-6 col-md-6 col-sm-12 mt-5 img_product">
+                <div id="P-Carousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#P-Carousel" data-bs-slide-to="0"
+                                class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#P-Carousel" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#P-Carousel" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="/static/styles/images/{{
+                            product_card[0].category_name }}/{{ product_card[1].id }}_1.jpg"
+                                 class="rounded mx-auto d-block" alt="1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/static/styles/images/{{
+                            product_card[0].category_name }}/{{ product_card[1].id }}_2.jpg"
+                                 class="rounded mx-auto d-block"
+                                 alt="2">
+                        </div>
+                        {% if product_card[0].id != 2 %}
+                        <div class="carousel-item">
+                            <img src="/static/styles/images/{{
+                            product_card[0].category_name }}/{{ product_card[1].id }}_3.jpg"
+                                 class="rounded mx-auto d-block"
+                                 alt="3">
+                        </div>
+                        {% endif %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#P-Carousel"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#P-Carousel"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-6 col-sm-12 mt-5">
+                <h1 class="display-5"> {{ product_card[1].product_name }}</h1>
+                <h3 class="pt-1"> Цена: &#8372;{{ product_card[1].price }}</h3>
+                <h4 class="pt-2">Характеристика </h4>
+                {% for item in specification %}
+                <p>{{ item }}</p>
+                {% endfor %}
+                <form action="{{ url_for('cart') }}" method="post">
+                    <div class="col-4">
+                        <div class="product_quantity">
+                            Количество
+                        </div>
+                        <div class="quantity_form my-3 col-6">
+                            {{ form.csrf_token }}
+                            {{ form.id(value=product_card[1].id) }}
+                            {{ form.quantity(class='form-control text-center', type='number', min=1,
+                            max=product_card[1].quantity,
+                            step=1, value=1) }}
+                        </div>
+                    </div>
+
+                    <p>
+                        <button type="submit" class="btn btn-success"> Купить</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock%}
