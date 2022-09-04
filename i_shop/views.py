@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import ListView, DetailView
 
+from .forms import CheckoutForm
 from .models import Category, Product
 from .cart import add, remove, get_cart_content
 
@@ -58,17 +59,22 @@ class Cart(View):
                       {'products': cart_content[0], 'to_pay': cart_content[1], 'quantity_in_cart': cart_content[2]})
 
 
-def add_to_cart(request, id):
-    add(request, id)
+def add_to_cart(request, product_id):
+    add(request, product_id)
     return redirect('cart')
 
 
-def quick_add_to_cart(request, id):
-    add(request, id)
+def quick_add_to_cart(request, product_id):
+    add(request, product_id)
     return redirect(request.POST.get('url_from'))
 
 
-def remove_from_cart(request, id):
-    remove(request, id)
+def remove_from_cart(request, product_id):
+    remove(request, product_id)
     return redirect('cart')
+
+
+def checkout(request):
+    form = CheckoutForm()
+    return render(request, 'i_shop/checkout.html', {'form': form})
 
