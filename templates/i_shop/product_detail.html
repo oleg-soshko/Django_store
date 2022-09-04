@@ -6,7 +6,7 @@
     <nav aria-label="breadcrumb" class="ms-5 mt-3">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="{% url 'home' %}"> Главная</a></li>
+                <a href="{% url 'home' %}"> Главная </a></li>
             <li class="breadcrumb-item">
                 <a href="{{ product.category.get_absolute_url }}">
                     {{ product.category }}
@@ -57,16 +57,16 @@
                 <h3 class="pt-1"> Цена: &#8372;{{ product.price }}</h3>
                 <h4 class="pt-2">Характеристика </h4>
                 <p>{{ product.description }}</p>
-                <form action="#" method="post">
+                <form action="{% url 'add' id=product.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="url_from" value="{{ request.path }}">
                     <div class="col-4">
                         <div class="product_quantity">
                             Количество
                         </div>
                         <div class="quantity_form my-3 col-6">
-                            {{ form.csrf_token }}
                         </div>
                     </div>
-
                     <p>
                         <button type="submit" class="btn btn-success"> Купить</button>
                     </p>

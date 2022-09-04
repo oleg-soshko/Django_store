@@ -1,20 +1,59 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<h1>GFFGFGFGFG</h1>
-
-{% for product in products %}
-    <p>{{ product }}</p>
-{% endfor %}
-
-{{ cart }}
-
-</body>
-</html>
+{% extends "i_shop/base.html" %}
+{% block title%} Корзина {% endblock%}
+{% block content %}
+<div class="container product-cart">
+    <div class="row">
+        <div class="col-12 my-5"> <h1 class="text-center display-4"> Корзина </h1> </div>
+    </div>
+    <div class="row col-row">
+        <table class="table mt-5">
+          <thead>
+            <tr>
+              <th scope="col" class="text-center"></th>
+              <th scope="col" class="">Товар</th>
+              <th scope="col" class="text-center">Цена</th>
+              <th scope="col" class="text-center">Количество</th>
+              <th scope="col" class="text-center">Сумма</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for item in products %}
+            <tr>
+              <td class="img_cart">
+                 <img src="{{ MEDIA_URL }}{{ item.product.main_image }}" alt="">
+              </td>
+              <td class="product_name align-middle fs-5">
+                  <span class="align-middle fs-5"> {{ item.product.name }} </span>
+              </td>
+              <td class="text-center align-middle">
+                  <span class="fs-5">₴ {{ item.product.price }} </span>
+              </td>
+              <td class="text-center align-middle">
+                 {{ item.quantity }}
+              </td>
+              <td class="text-center align-middle ">
+                  <span class="fw-bold fs-5"> ₴ {{ item.total }} </span>
+                  <a href="{% url 'remove' id=item.product.id %}">
+                      <button type="button" class="btn btn-outline-danger btn-sm ms-1">
+                          <i class="bi bi-trash"></i>
+                      </button>
+                  </a>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col">Итого к оплате:<span class="fw-bold fs-5"> ₴ {{ to_pay }}</span></div>
+    </div>
+    <div class="mt-3">
+        <div >
+            <a href="{% url 'home' %}" class="view_cart"> Продолжить покупку </a>
+        </div>
+        <div class="mt-3">
+            <a href="#" class="btn btn-success"> Оплатить </a>
+        </div>
+    </div>
+</div>
+{% endblock%}
