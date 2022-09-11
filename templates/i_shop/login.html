@@ -1,0 +1,18 @@
+{% extends "i_shop/base.html" %}
+
+{% block title%} Login | i-Shop {% endblock%}
+
+{% block content %}
+
+<div class="container register_page">
+    <h1 class="my-3"> Авторизация </h1>
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary btn-block"> Войти </button>
+    </form>
+</div>
+
+{% endblock%}

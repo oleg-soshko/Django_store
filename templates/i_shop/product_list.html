@@ -27,7 +27,7 @@
                             <div class="me-5">
                                 <a href="{{ product.get_absolute_url }}" class="btn btn-success"> Обзор </a>
                             </div>
-                            <form action="{% url 'quick_add' id=product.id %}" method="post">
+                            <form action="{% url 'quick_add' product_id=product.id %}" method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="url_from" value="{{ request.path }}">
                                 <p>

@@ -1,8 +1,9 @@
+from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import ListView, DetailView
 
-from .forms import CheckoutForm
+from .forms import CheckoutForm, UserRegisterForm
 from .models import Category, Product
 from .cart import add, remove, get_cart_content
 
@@ -50,7 +51,6 @@ class ProductDetailView(DetailView):
 
 
 class Cart(View):
-
     def get(self, request):
         if not request.session.get('cart'):
             request.session['cart'] = list()
@@ -77,4 +77,22 @@ def remove_from_cart(request, product_id):
 def checkout(request):
     form = CheckoutForm()
     return render(request, 'i_shop/checkout.html', {'form': form})
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'You are register')
+            return redirect('home')
+        else:
+            messages.error(request, 'Error register')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'i_shop/register.html', {'form': form})
+
+
+def user_login(request):
+    return render(request, 'i_shop/login.html')
 

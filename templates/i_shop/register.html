@@ -1,0 +1,20 @@
+{% extends "i_shop/base.html" %}
+
+{% block title%} Register | i-Shop {% endblock%}
+
+{% block content %}
+
+<div class="container register_page">
+    <h1 class="my-3"> Регистрация </h1>
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary btn-block"> Регистрация </button>
+    </form>
+</div>
+
+{% endblock%}
+
+

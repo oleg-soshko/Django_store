@@ -27,8 +27,6 @@ def add(request, id):
 
 def remove(request, id):
     if request.method == 'GET':
-        print(request.GET.get('url_from'))
-        print(request.POST.get('url_from'))
         for product in request.session['cart']:
             if product['product_id'] == id:
                 product.clear()

@@ -118,6 +118,11 @@
 
 /* Main-page */
 
+
+.asd {
+    min-height: 80vh;
+}
+
 .product-cart,
 .checkout,
 .success,
@@ -257,4 +262,11 @@ li a {
     width: 300px;
 }
 
+
+/* Login | Register */
+
+.login_page,
+.register_page {
+    min-height: 80vh;
+}
 
