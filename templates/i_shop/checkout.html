@@ -6,33 +6,28 @@
 <div class="container checkout">
     <div class="row">
         <div class="col-6 mt-5 me-5 info-person">
-            <form method="post" action="">
+            <form method="post" action="{% url 'checkout' %}">
                 <div class="row">
                     <div class="col-lg-12">
                         <h4 class="bold"> Персональная информация </h4>
                     </div>
                     {{ form.csrf_token }}
-                    <div class="input-group py-3">
-                        <div class="form-group pe-5">
-                            <label> Имя </label>
 
-                        </div>
-                        <div class="form-group">
-                            <label> Фамилия </label>
-
-                        </div>
-                    </div>
-                    <div class="input-group py-3">
-                        <div class="form-group pe-5">
-                            <label> Город </label>
-
-                        </div>
-                        <div class="form-group">
-                            <label> Телефон </label>
-
+                    {{ form.non_field.errors }}
+                    <div class="form-group">
+                        <label for="{{ form.city.id_for_label }}"> Город: </label>
+                        {{ form.city }}
+                        <div class="invalid-feedback">
+                            {{ form.city.errors }}
                         </div>
                     </div>
-                    {{ form.as_p }}
+                    <div class="form-group">
+                        <label for="{{ form.address.id_for_label }}"> Адрес: </label>
+                        {{ form.address }}
+                        <div class="invalid-feedback">
+                            {{ form.address.errors }}
+                        </div>
+                    </div>
                     <p>
                         <button type="submit" class="btn btn-success mt-2"> Подтвердить заказ</button>
                     </p>

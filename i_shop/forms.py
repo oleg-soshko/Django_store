@@ -6,14 +6,16 @@ from .models import Order
 
 
 class CheckoutForm(forms.Form):
-
+    city = forms.CharField(max_length=150, label='Город', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    address = forms.CharField(max_length=250, label='Адрес', widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
 class UserRegisterForm(UserCreationForm):
     username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'name@example.com'}))
+    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class': 'form-control',
+                                                                            'placeholder': 'name@example.com'}))
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     password2 = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 

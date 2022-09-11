@@ -5,7 +5,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView
 
 from .forms import CheckoutForm, UserRegisterForm, UserLoginForm
-from .models import Category, Product
+from .models import Category, Product, Order
 from .cart import add, remove, get_cart_content
 
 
@@ -79,7 +79,14 @@ def checkout(request):
     if not request.session.get('cart'):
         request.session['cart'] = list()
     cart_content = get_cart_content(request)
-    form = CheckoutForm()
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            Order.objects.create(**form.cleaned_data)
+            # city = form.cleaned_data['city']
+            # Order.objects.create(city=city)
+    else:
+        form = CheckoutForm()
     return render(request, 'i_shop/checkout.html', {'form': form, 'products': cart_content[0],
                                                     'to_pay': cart_content[1], 'quantity_in_cart': cart_content[2]})
 
