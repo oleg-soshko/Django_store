@@ -59,6 +59,15 @@
    color: #66ff00;
 }
 
+.nav-welcome-text{
+    color: #fff;
+    font-weight: 500;
+}
+
+.nav-welcome-username:hover{
+    color: #66ff00;
+}
+
 /* Product-cart */
 
 .img_product img{
@@ -268,5 +277,15 @@ li a {
 .login_page,
 .register_page {
     min-height: 80vh;
+}
+
+.login_page a {
+    color: #00cc00;
+    text-decoration: none;
+    transition: all .3s;
+}
+
+.login_page a:hover {
+    color: #008200;
 }
 

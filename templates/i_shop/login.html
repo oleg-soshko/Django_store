@@ -4,14 +4,17 @@
 
 {% block content %}
 
-<div class="container register_page">
+<div class="container login_page col-3">
     <h1 class="my-3"> Авторизация </h1>
     <form method="post">
         {% csrf_token %}
 
         {{ form.as_p }}
+        <div class="d-flex">
+            <button type="submit" class="me-auto btn btn-success btn-block"> Войти </button>
+            <a href="{% url 'register' %}" class="ms-auto"> Регистрация </a>
+        </div>
 
-        <button type="submit" class="btn btn-primary btn-block"> Войти </button>
     </form>
 </div>
 

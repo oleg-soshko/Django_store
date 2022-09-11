@@ -4,14 +4,14 @@
 
 {% block content %}
 
-<div class="container register_page">
+<div class="container register_page col-4">
     <h1 class="my-3"> Регистрация </h1>
     <form method="post">
         {% csrf_token %}
 
         {{ form.as_p }}
 
-        <button type="submit" class="btn btn-primary btn-block"> Регистрация </button>
+        <button type="submit" class="btn btn-success btn-block"> Регистрация </button>
     </form>
 </div>
 

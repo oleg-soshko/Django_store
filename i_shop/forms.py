@@ -5,10 +5,8 @@ from django.contrib.auth.models import User
 from .models import Order
 
 
-class CheckoutForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        fields = '__all__'
+class CheckoutForm(forms.Form):
+
 
 
 class UserRegisterForm(UserCreationForm):
@@ -24,4 +22,6 @@ class UserRegisterForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
 
-
+class UserLoginForm(AuthenticationForm):
+    username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))

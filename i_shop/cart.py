@@ -35,19 +35,22 @@ def remove(request, id):
     request.session.modified = True
 
 
-def get_cart_content(session):
+def get_cart_content(request):
     products_in_cart = list()
     to_pay = 0
     quantity_in_cart = 0
-    for item in session:
-        product_in_cart = Product.objects.get(pk=int(item['product_id']))
-        total = item['quantity'] * product_in_cart.price
-        to_pay += total
-        quantity_in_cart += item['quantity']
-        products_in_cart.append(
-            {'product': product_in_cart,
-             'quantity': item['quantity'],
-             'total': total
-             }
-        )
+    if not request.session.get('cart'):
+        request.session['cart'] = list()
+    else:
+        for item in request.session['cart']:
+            product_in_cart = Product.objects.get(pk=int(item['product_id']))
+            total = item['quantity'] * product_in_cart.price
+            to_pay += total
+            quantity_in_cart += item['quantity']
+            products_in_cart.append(
+                {'product': product_in_cart,
+                 'quantity': item['quantity'],
+                 'total': total
+                 }
+            )
     return products_in_cart, to_pay, quantity_in_cart
