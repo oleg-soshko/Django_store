@@ -45,7 +45,7 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, verbose_name='Продукт', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Изображение продукта'
+        return f'Изображение {self.product.name}'
 
     class Meta:
         verbose_name = 'Изображение продукта'
@@ -84,7 +84,7 @@ class ProductReview(models.Model):
     product = models.ForeignKey(Product, verbose_name='Продукт', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return f'Отзыв о продукте'
+        return f'Отзыв о продукте {self.product.name}'
 
     class Meta:
         verbose_name = 'Отзыв о продукте'
@@ -97,7 +97,7 @@ class OrderReview(models.Model):
     order = models.ForeignKey(Order, verbose_name='Заказ', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return f'Отзыв о заказе'
+        return f'Отзыв о заказе № {self.order.pk}'
 
     class Meta:
         verbose_name = 'Отзыв о заказе'
