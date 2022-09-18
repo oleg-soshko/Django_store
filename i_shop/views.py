@@ -1,11 +1,14 @@
+from datetime import datetime
+
 from django.contrib import messages
 from django.contrib.auth import login, logout
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import ListView, DetailView
 
 from .forms import CheckoutForm, UserRegisterForm, UserLoginForm
-from .models import Category, Product, Order
+from .models import Category, Product, Order, OrderDetails
 from .cart import add, remove, get_cart_content
 
 
@@ -56,8 +59,9 @@ class Cart(View):
         if not request.session.get('cart'):
             request.session['cart'] = list()
         cart_content = get_cart_content(request)
-        return render(request, 'i_shop/cart.html',
-                      {'products': cart_content[0], 'to_pay': cart_content[1], 'quantity_in_cart': cart_content[2]})
+        return render(request, 'i_shop/cart.html', {'products': cart_content[0],
+                                                    'to_pay': cart_content[1],
+                                                    'quantity_in_cart': cart_content[2]})
 
 
 def add_to_cart(request, product_id):
@@ -82,13 +86,40 @@ def checkout(request):
     if request.method == 'POST':
         form = CheckoutForm(request.POST)
         if form.is_valid():
-            Order.objects.create(**form.cleaned_data)
+            order = Order.objects.create(
+                city=form.cleaned_data['city'],
+                address=form.cleaned_data['address'],
+                user=request.user
+            )
+            for item in cart_content[0]:
+                OrderDetails.objects.create(
+                    product=item['product'],
+                    quantity=item['quantity'],
+                    order=order
+                )
+            return redirect('success', order_pk=order.pk)
+            #Order.objects.create(**form.cleaned_data)
             # city = form.cleaned_data['city']
             # Order.objects.create(city=city)
     else:
         form = CheckoutForm()
-    return render(request, 'i_shop/checkout.html', {'form': form, 'products': cart_content[0],
-                                                    'to_pay': cart_content[1], 'quantity_in_cart': cart_content[2]})
+    return render(request, 'i_shop/checkout.html', {'form': form,
+                                                    'products': cart_content[0],
+                                                    'to_pay': cart_content[1],
+                                                    'quantity_in_cart': cart_content[2]})
+
+
+def success(request, order_pk):
+    if not request.session.get('cart'):
+        request.session['cart'] = list()
+    cart_content = get_cart_content(request)
+    order_date = datetime.now().strftime("%d.%m.%y")
+    order = Order.objects.get(pk=order_pk)
+    return render(request, 'i_shop/success.html', {'products': cart_content[0],
+                                                   'to_pay': cart_content[1],
+                                                   'quantity_in_cart': cart_content[2],
+                                                   'order_date': order_date,
+                                                   'order': order})
 
 
 def register(request):
@@ -106,8 +137,10 @@ def register(request):
             messages.error(request, 'Error register')
     else:
         form = UserRegisterForm()
-    return render(request, 'i_shop/register.html', {'form': form, 'products': cart_content[0],
-                                                    'to_pay': cart_content[1], 'quantity_in_cart': cart_content[2]})
+    return render(request, 'i_shop/register.html', {'form': form,
+                                                    'products': cart_content[0],
+                                                    'to_pay': cart_content[1],
+                                                    'quantity_in_cart': cart_content[2]})
 
 
 def user_login(request):
@@ -122,8 +155,10 @@ def user_login(request):
             return redirect('home')
     else:
         form = UserLoginForm()
-    return render(request, 'i_shop/login.html', {'form': form, 'products': cart_content[0],
-                                                 'to_pay': cart_content[1], 'quantity_in_cart': cart_content[2]})
+    return render(request, 'i_shop/login.html', {'form': form,
+                                                 'products': cart_content[0],
+                                                 'to_pay': cart_content[1],
+                                                 'quantity_in_cart': cart_content[2]})
 
 
 def user_logout(request):

@@ -58,7 +58,7 @@ class Order(models.Model):
     address = models.CharField(max_length=250)
 
     def __str__(self):
-        return f'Заказ'
+        return f'Заказ № {self.pk}'
 
     class Meta:
         verbose_name = 'Заказ'
@@ -71,7 +71,7 @@ class OrderDetails(models.Model):
     order = models.ForeignKey(Order, verbose_name='Заказ', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Детали заказа'
+        return f'Детали заказа № {self.order.pk}'
 
     class Meta:
         verbose_name = 'Детали заказа'
