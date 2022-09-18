@@ -64,7 +64,9 @@ class Cart(View):
 
 
 def add_to_cart(request, product_id):
-    add(request, product_id)
+    product_quantity = int(request.POST.get('product_quantity'))
+    print(product_quantity)
+    add(request, product_id, product_quantity)
     return redirect('cart')
 
 

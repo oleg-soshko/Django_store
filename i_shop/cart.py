@@ -9,7 +9,7 @@ class CartItems(NamedTuple):
     quantity_in_cart: int
 
 
-def add(request, id):
+def add(request, id, product_quantity=1):
     if request.method == 'POST':
         if not request.session.get('cart'):
             request.session['cart'] = list()
@@ -18,7 +18,7 @@ def add(request, id):
 
         add_data = {
             'product_id': id,
-            'quantity': 1
+            'quantity': product_quantity
         }
 
         product_exists = next((product for product in request.session['cart'] if product['product_id'] == id), False)
@@ -29,7 +29,7 @@ def add(request, id):
         else:
             for product in request.session['cart']:
                 if product['product_id'] == id:
-                    product['quantity'] += 1
+                    product['quantity'] += product_quantity
                     request.session.modified = True
 
 

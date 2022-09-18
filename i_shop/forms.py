@@ -2,8 +2,6 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-from .models import Order
-
 
 class CheckoutForm(forms.Form):
     city = forms.CharField(max_length=150, label='Город', widget=forms.TextInput(attrs={'class': 'form-control'}))
