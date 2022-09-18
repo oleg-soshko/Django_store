@@ -1,4 +1,12 @@
+from typing import NamedTuple
+
 from .models import Product
+
+
+class CartItems(NamedTuple):
+    products_in_cart: list
+    to_pay: int
+    quantity_in_cart: int
 
 
 def add(request, id):
@@ -53,7 +61,8 @@ def get_cart_content(request):
                  'total': total
                  }
             )
-    return products_in_cart, to_pay, quantity_in_cart
+    #return products_in_cart, to_pay, quantity_in_cart
+    return CartItems(products_in_cart=products_in_cart, to_pay=to_pay, quantity_in_cart=quantity_in_cart)
 
 
 def delete_cart(request):

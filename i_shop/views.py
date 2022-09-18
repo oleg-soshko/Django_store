@@ -17,9 +17,9 @@ class CategoryListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cart_content = get_cart_content(self.request)
-        context['products'] = cart_content[0]
-        context['to_pay'] = cart_content[1]
-        context['quantity_in_cart'] = cart_content[2]
+        context['products'] = cart_content.products_in_cart
+        context['to_pay'] = cart_content.to_pay
+        context['quantity_in_cart'] = cart_content.quantity_in_cart
         return context
 
 
@@ -32,9 +32,9 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cart_content = get_cart_content(self.request)
-        context['products'] = cart_content[0]
-        context['to_pay'] = cart_content[1]
-        context['quantity_in_cart'] = cart_content[2]
+        context['products'] = cart_content.products_in_cart
+        context['to_pay'] = cart_content.to_pay
+        context['quantity_in_cart'] = cart_content.quantity_in_cart
         return context
 
 
@@ -47,9 +47,9 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cart_content = get_cart_content(self.request)
-        context['products'] = cart_content[0]
-        context['to_pay'] = cart_content[1]
-        context['quantity_in_cart'] = cart_content[2]
+        context['products'] = cart_content.products_in_cart
+        context['to_pay'] = cart_content.to_pay
+        context['quantity_in_cart'] = cart_content.quantity_in_cart
         return context
 
 
@@ -58,11 +58,9 @@ class Cart(View):
         if not request.session.get('cart'):
             request.session['cart'] = list()
         cart_content = get_cart_content(request)
-        print(cart_content[2])
-        print(type(cart_content[2]))
-        return render(request, 'i_shop/cart.html', {'products': cart_content[0],
-                                                    'to_pay': cart_content[1],
-                                                    'quantity_in_cart': cart_content[2]})
+        return render(request, 'i_shop/cart.html', {'products': cart_content.products_in_cart,
+                                                    'to_pay': cart_content.to_pay,
+                                                    'quantity_in_cart': cart_content.quantity_in_cart})
 
 
 def add_to_cart(request, product_id):
@@ -107,9 +105,9 @@ def checkout(request):
     else:
         form = CheckoutForm()
     return render(request, 'i_shop/checkout.html', {'form': form,
-                                                    'products': cart_content[0],
-                                                    'to_pay': cart_content[1],
-                                                    'quantity_in_cart': cart_content[2],
+                                                    'products': cart_content.products_in_cart,
+                                                    'to_pay': cart_content.to_pay,
+                                                    'quantity_in_cart': cart_content.quantity_in_cart,
                                                     'to_pay_with_delivery': to_pay_with_delivery})
 
 
@@ -120,9 +118,9 @@ def success(request, order_pk):
     order_date = datetime.now().strftime("%d.%m.%y")
     order = Order.objects.get(pk=order_pk)
     delete_cart(request)
-    return render(request, 'i_shop/success.html', {'products': cart_content[0],
-                                                   'to_pay': cart_content[1],
-                                                   'quantity_in_cart': cart_content[2],
+    return render(request, 'i_shop/success.html', {'products': cart_content.products_in_cart,
+                                                   'to_pay': cart_content.to_pay,
+                                                   'quantity_in_cart': cart_content.quantity_in_cart,
                                                    'order_date': order_date,
                                                    'order': order})
 
@@ -136,16 +134,16 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, 'You are register')
+            messages.success(request, 'Вы успешно зарегистрировались')
             return redirect('home')
         else:
-            messages.error(request, 'Error register')
+            messages.error(request, 'Ошибка регистрации')
     else:
         form = UserRegisterForm()
     return render(request, 'i_shop/register.html', {'form': form,
-                                                    'products': cart_content[0],
-                                                    'to_pay': cart_content[1],
-                                                    'quantity_in_cart': cart_content[2]})
+                                                    'products': cart_content.products_in_cart,
+                                                    'to_pay': cart_content.to_pay,
+                                                    'quantity_in_cart': cart_content.quantity_in_cart})
 
 
 def user_login(request):
@@ -161,9 +159,9 @@ def user_login(request):
     else:
         form = UserLoginForm()
     return render(request, 'i_shop/login.html', {'form': form,
-                                                 'products': cart_content[0],
-                                                 'to_pay': cart_content[1],
-                                                 'quantity_in_cart': cart_content[2]})
+                                                 'products': cart_content.products_in_cart,
+                                                 'to_pay': cart_content.to_pay,
+                                                 'quantity_in_cart': cart_content.quantity_in_cart})
 
 
 def user_logout(request):
