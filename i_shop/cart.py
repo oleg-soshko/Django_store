@@ -54,3 +54,9 @@ def get_cart_content(request):
                  }
             )
     return products_in_cart, to_pay, quantity_in_cart
+
+
+def delete_cart(request):
+    if request.session.get('cart'):
+        del request.session['cart']
+        request.session.modified = True

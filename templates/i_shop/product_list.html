@@ -25,13 +25,13 @@
                         <p class="text-center"> Цена: &#8372; {{ product.price }} </p>
                         <div class="d-flex justify-content-center">
                             <div class="me-5">
-                                <a href="{{ product.get_absolute_url }}" class="btn btn-success"> Обзор </a>
+                                <a href="{{ product.get_absolute_url }}" class="product-button btn btn-success"> Обзор </a>
                             </div>
                             <form action="{% url 'quick_add' product_id=product.id %}" method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="url_from" value="{{ request.path }}">
                                 <p>
-                                    <button type="submit" class="btn btn-success"> Купить </button>
+                                    <button type="submit" class="product-button btn btn-success"> В корзину </button>
                                 </p>
                             </form>
                         </div>

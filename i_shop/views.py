@@ -2,14 +2,13 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth import login, logout
-from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import ListView, DetailView
 
 from .forms import CheckoutForm, UserRegisterForm, UserLoginForm
 from .models import Category, Product, Order, OrderDetails
-from .cart import add, remove, get_cart_content
+from .cart import add, remove, get_cart_content, delete_cart
 
 
 class CategoryListView(ListView):
@@ -59,6 +58,8 @@ class Cart(View):
         if not request.session.get('cart'):
             request.session['cart'] = list()
         cart_content = get_cart_content(request)
+        print(cart_content[2])
+        print(type(cart_content[2]))
         return render(request, 'i_shop/cart.html', {'products': cart_content[0],
                                                     'to_pay': cart_content[1],
                                                     'quantity_in_cart': cart_content[2]})
@@ -71,6 +72,7 @@ def add_to_cart(request, product_id):
 
 def quick_add_to_cart(request, product_id):
     add(request, product_id)
+    messages.success(request, 'Товар добавлен в корзину')
     return redirect(request.POST.get('url_from'))
 
 
@@ -83,6 +85,7 @@ def checkout(request):
     if not request.session.get('cart'):
         request.session['cart'] = list()
     cart_content = get_cart_content(request)
+    to_pay_with_delivery =  cart_content[1] + 45
     if request.method == 'POST':
         form = CheckoutForm(request.POST)
         if form.is_valid():
@@ -106,7 +109,8 @@ def checkout(request):
     return render(request, 'i_shop/checkout.html', {'form': form,
                                                     'products': cart_content[0],
                                                     'to_pay': cart_content[1],
-                                                    'quantity_in_cart': cart_content[2]})
+                                                    'quantity_in_cart': cart_content[2],
+                                                    'to_pay_with_delivery': to_pay_with_delivery})
 
 
 def success(request, order_pk):
@@ -115,6 +119,7 @@ def success(request, order_pk):
     cart_content = get_cart_content(request)
     order_date = datetime.now().strftime("%d.%m.%y")
     order = Order.objects.get(pk=order_pk)
+    delete_cart(request)
     return render(request, 'i_shop/success.html', {'products': cart_content[0],
                                                    'to_pay': cart_content[1],
                                                    'quantity_in_cart': cart_content[2],

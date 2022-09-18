@@ -13,7 +13,7 @@
     </div>
     <div class="row mt-5">
         <div class="col-6 me-5 success-info pt-3">
-            <span class="order-id"> Заказ №  </span>
+            <span class="order-id"> Заказ № {{ order.pk }} </span>
             <span class="order-date ps-3"> от {{ order_date }} </span>
             <table class="table">
                 <thead>
@@ -53,12 +53,12 @@
         <div class="col-4 ms-5 pt-4 success-info-order">
             <div style="overflow: hidden;">
                 <p class="text-muted text-to-success" style="float: left;"> Доставка в </p>
-                <p class="text-to-success" style="float: right;"> г.  </p>
+                <p class="text-to-success" style="float: right;"> г.{{ order.city }}   </p>
             </div>
             <div style="overflow: hidden;">
                 <p class="text-muted text-to-success" style="float: left;"> Получатель </p>
                 <p class="text-to-success" style="float: right;">
-                    {{ form.last_name.data }} {{ form.first_name.data }}
+                    {{ order.user.last_name }} {{ order.user.first_name }}
                 </p>
             </div>
             <div style="overflow: hidden;">
@@ -67,7 +67,7 @@
             </div>
             <div style="overflow: hidden;">
                 <p class="pt-1 text-muted text-to-success" style="float: left;"> К оплате </p>
-                <p class="fw-bold fs-4 text-to-success" style="float: right;"> &#8372;  </p>
+                <p class="fw-bold fs-4 text-to-success" style="float: right;"> &#8372; {{ to_pay }} </p>
             </div>
             <p></p>
         </div>

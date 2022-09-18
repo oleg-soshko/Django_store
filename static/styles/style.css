@@ -74,6 +74,13 @@
     max-height: 500px;
 }
 
+/* Product-list */
+
+.product-button{
+    width: 100px;
+}
+
+
 /* Cart */
 
 .img_cart img{
