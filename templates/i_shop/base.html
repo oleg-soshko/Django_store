@@ -44,7 +44,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body table-responsive">
                                     <table class="table">
                                         <thead>
                                         <tr>
@@ -83,11 +83,7 @@
                                         {% endfor %}
                                         {% endif %}
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
+                                            <td colspan="5" class="text-end">
                                                 <div class="col">
                                                     <span class="fs-5">Итого к оплате:</span>
                                                     <span class="fw-bold fs-4"> ₴ {{ to_pay }}</span>
