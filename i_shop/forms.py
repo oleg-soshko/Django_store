@@ -2,10 +2,16 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
+from .models import Payment, Delivery
+
 
 class CheckoutForm(forms.Form):
     city = forms.CharField(max_length=150, label='Город', widget=forms.TextInput(attrs={'class': 'form-control'}))
     address = forms.CharField(max_length=250, label='Адрес', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    payment_type = forms.ModelChoiceField(label='Тип оплаты', queryset=Payment.objects.all(),
+                                          widget=forms.Select(attrs={'class': 'form-control'}))
+    delivery_type = forms.ModelChoiceField(label='Тип доставки', queryset=Delivery.objects.all(),
+                                           widget=forms.Select(attrs={'class': 'form-control'}))
 
 
 class UserRegisterForm(UserCreationForm):

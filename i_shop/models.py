@@ -52,10 +52,37 @@ class ProductImage(models.Model):
         verbose_name_plural = 'Изображения продукта'
 
 
+class Payment(models.Model):
+    type = models.CharField(max_length=250)
+
+    def __str__(self):
+        return f'{self.type}'
+
+    class Meta:
+        verbose_name = 'Тип оплаты'
+        verbose_name_plural = 'Типы оплаты'
+
+
+class Delivery(models.Model):
+    type = models.CharField(max_length=250)
+    cost = models.FloatField()
+
+    def __str__(self):
+        return f'{self.type}'
+
+    class Meta:
+        verbose_name = 'Тип доставки'
+        verbose_name_plural = 'Типы доставки'
+
+
 class Order(models.Model):
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     city = models.CharField(max_length=150)
     address = models.CharField(max_length=250)
+    payment_type = models.ForeignKey(Payment, verbose_name='Тип оплаты', on_delete=models.SET_NULL, null=True)
+    delivery_type = models.ForeignKey(Delivery, verbose_name='Тип доставки', on_delete=models.SET_NULL, null=True)
+    total_price = models.FloatField()
+    total_to_pay = models.FloatField()
 
     def __str__(self):
         return f'Заказ № {self.pk}'

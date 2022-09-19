@@ -11,7 +11,7 @@
                 в случае необходимости с Вами свяжется оператор. </p>
         </div>
     </div>
-    <div class="row mt-5">
+    <div class="row table-responsive mt-5">
         <div class="col-6 me-5 success-info pt-3">
             <span class="order-id"> Заказ № {{ order.pk }} </span>
             <span class="order-date ps-3"> от {{ order_date }} </span>
@@ -25,7 +25,6 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 {% for item in products %}
                 <tr>
 
@@ -46,7 +45,6 @@
 
                 </tr>
                 {% endfor %}
-
                 </tbody>
             </table>
         </div>
@@ -56,6 +54,10 @@
                 <p class="text-to-success" style="float: right;"> г.{{ order.city }}   </p>
             </div>
             <div style="overflow: hidden;">
+                <p class="text-muted text-to-success" style="float: left;"> Тип доставки </p>
+                <p class="text-to-success" style="float: right;"> {{ order.delivery_type }}   </p>
+            </div>
+            <div style="overflow: hidden;">
                 <p class="text-muted text-to-success" style="float: left;"> Получатель </p>
                 <p class="text-to-success" style="float: right;">
                     {{ order.user.last_name }} {{ order.user.first_name }}
@@ -63,11 +65,11 @@
             </div>
             <div style="overflow: hidden;">
                 <p class="text-muted text-to-success" style="float: left;"> Оплата </p>
-                <p class="text-to-success" style="float: right;"> Наличными при получении </p>
+                <p class="text-to-success" style="float: right;"> {{ order.payment_type }} </p>
             </div>
             <div style="overflow: hidden;">
                 <p class="pt-1 text-muted text-to-success" style="float: left;"> К оплате </p>
-                <p class="fw-bold fs-4 text-to-success" style="float: right;"> &#8372; {{ to_pay }} </p>
+                <p class="fw-bold fs-4 text-to-success" style="float: right;"> &#8372; {{ order.total_to_pay }} </p>
             </div>
             <p></p>
         </div>

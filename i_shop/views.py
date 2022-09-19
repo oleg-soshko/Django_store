@@ -65,7 +65,6 @@ class Cart(View):
 
 def add_to_cart(request, product_id):
     product_quantity = int(request.POST.get('product_quantity'))
-    print(product_quantity)
     add(request, product_id, product_quantity)
     return redirect('cart')
 
@@ -85,13 +84,16 @@ def checkout(request):
     if not request.session.get('cart'):
         request.session['cart'] = list()
     cart_content = get_cart_content(request)
-    to_pay_with_delivery =  cart_content[1] + 45
     if request.method == 'POST':
         form = CheckoutForm(request.POST)
         if form.is_valid():
             order = Order.objects.create(
                 city=form.cleaned_data['city'],
                 address=form.cleaned_data['address'],
+                payment_type=form.cleaned_data['payment_type'],
+                delivery_type=form.cleaned_data['delivery_type'],
+                total_price=cart_content.to_pay,
+                total_to_pay=cart_content.to_pay + form.cleaned_data['delivery_type'].cost,
                 user=request.user
             )
             for item in cart_content[0]:
@@ -109,8 +111,7 @@ def checkout(request):
     return render(request, 'i_shop/checkout.html', {'form': form,
                                                     'products': cart_content.products_in_cart,
                                                     'to_pay': cart_content.to_pay,
-                                                    'quantity_in_cart': cart_content.quantity_in_cart,
-                                                    'to_pay_with_delivery': to_pay_with_delivery})
+                                                    'quantity_in_cart': cart_content.quantity_in_cart})
 
 
 def success(request, order_pk):
