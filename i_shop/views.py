@@ -170,3 +170,16 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+
+class UserMenuInfo(View):
+    def get(self, request):
+
+        return render(request, 'i_shop/user_menu_info.html', {'user': request.user})
+
+
+class UserMenuOrders(View):
+    def get(self, request):
+        orders = Order.objects.all()
+
+        return render(request, 'i_shop/user_menu_orders.html', {'user': request.user, 'orders': orders})

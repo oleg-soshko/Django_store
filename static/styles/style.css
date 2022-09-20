@@ -296,3 +296,10 @@ li a {
     color: red;
 }
 
+/* User Menu */
+
+.user_menu {
+    min-height: 80vh;
+}
+
+

@@ -1,0 +1,54 @@
+{% extends 'i_shop/base.html' %}
+
+{% block title%} User Menu | i-Shop {% endblock%}
+
+{% block content %}
+
+<section>
+
+    <nav aria-label="breadcrumb" class="ms-5 mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}"> Главная </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page"> Личный кабинет </li>
+        </ol>
+    </nav>
+
+    <div class="container-fluid user_menu">
+
+        <div class="row">
+            <div class="col-10 my-5">
+                <h1 class="text-center display-4"> Личный кабинет </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+                <div class="list-group">
+                    <a href="{% url 'user_info' %}" class="list-group-item list-group-item-action active" aria-current="true">
+                        Личные данные
+                    </a>
+                    <a href="{% url 'user_orders' %}" class="list-group-item list-group-item-action">
+                        Заказы
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        A third link item
+                    </a>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="border border-light">
+                    <h4> Персональная информация </h4>
+                    <p> Имя: {{  user.first_name }}</p>
+                    <p> Фамилия: {{  user.last_name }}</p>
+                    <p> email: {{  user.email }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
