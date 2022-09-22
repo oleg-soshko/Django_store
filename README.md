@@ -18,15 +18,34 @@ python manage.py runserver
 
 Go to `http://127.0.0.1:5000`
 
+#### Main Page (with product categories)
+
+![1](/site_images/1.jpg)
+
+#### Products list
+
+![1](/site_images/2.jpg)
+
+#### Product Card
+
+![1](/site_images/3.jpg)
+
+#### Cart
+
+![1](/site_images/4.jpg)
+
+#### Success order
+
+![1](/site_images/5.jpg)
+
+#### Modal cart
+
+![1](/site_images/6.jpg)
+
+
 ### 4. Technology Stacks
 - Python
 - Django
 - HTML
 - CSS
 - bootstrap
-
-<img
-  src="/site_images/1.jpg"
-  alt="Alt text"
-  title="Optional title"
-  style="max-width: 50px">
