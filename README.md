@@ -30,3 +30,5 @@ Go to `http://127.0.0.1:5000`
   alt="Alt text"
   title="Optional title"
   style="max-width: 50px">
+  
+![1](/site_images/1.jpg)
