@@ -96,7 +96,7 @@ def checkout(request):
                 total_to_pay=cart_content.to_pay + form.cleaned_data['delivery_type'].cost,
                 user=request.user
             )
-            for item in cart_content[0]:
+            for item in cart_content.products_in_cart:
                 OrderDetails.objects.create(
                     product=item['product'],
                     quantity=item['quantity'],
