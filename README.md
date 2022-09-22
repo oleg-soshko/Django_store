@@ -29,4 +29,4 @@ Go to `http://127.0.0.1:5000`
   src="/site_images/1.jpg"
   alt="Alt text"
   title="Optional title"
-  style="display: inline-block; margin: 0 auto; max-width: 50px">
+  style="max-width: 50px">
