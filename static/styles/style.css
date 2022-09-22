@@ -59,7 +59,8 @@
    color: #66ff00;
 }
 
-.nav-welcome-text{
+.nav-welcome-text span,
+.nav-welcome-text a{
     color: #fff;
     font-weight: 500;
 }
@@ -302,4 +303,25 @@ li a {
     min-height: 80vh;
 }
 
+.list-group-item.active{
+    background-color: #6AD700;
+    border-color: #74EA00;
+    color: #343434;
+}
+
+.border-primary {
+    border-color: #6AD700!important;
+}
+
+.order-total-to-pay {
+    margin: 0 0 15px 15px;
+}
+
+.order-total-to-pay {
+    font-size: 1rem;
+}
+
+.order-detail-img {
+    width: 75px;
+}
 

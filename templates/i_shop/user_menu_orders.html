@@ -38,40 +38,42 @@
             </div>
 
             <div class="col-6">
-                <div class="border border-light">
+                <div class="border rounded border-primary">
                     <div class="accordion" id="userOrders">
                         {% for order in orders %}
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ order.pk }}" aria-expanded="false" aria-controls="collapseOne">
-                                        Заказ № {{ order.pk }}
-                                    </button>
-                                </h2>
-                                <div id="collapse{{ order.pk }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#userOrders">
-                                    <div class="accordion-body">
+                        <div class="accordion-item">
+                            <h2 class="order-detail-header accordion-header" id="headingOne">
+                                <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ order.pk }}" aria-expanded="false" aria-controls="collapseOne">
+                                    Заказ № {{ order.pk }}
+                                </a>
+                                <p class="order-total-to-pay"> На сумму ₴ {{ order.total_to_pay }}</p>
+                            </h2>
+                            <div id="collapse{{ order.pk }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#userOrders">
+                                <div class="accordion-body">
+
+                                    <table class="table">
+                                        <tbody>
                                         {% for order_details in order.orderdetails_set.all %}
-                                            <table class="table">
-                                                <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <img src="{{ MEDIA_URL }}{{ order_details.product.main_image }}">
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ order_details.product.get_absolute_url }}"> {{ order_details.product.name }} </a>
-                                                    </td>
-                                                    <td>
-                                                        {{ order_details.product.quantity }}
-                                                    </td>
-                                                    <td>
-                                                        {{ order_details.product.price }}
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                            <tr>
+                                                <td>
+                                                    <img class="order-detail-img" src="{{ MEDIA_URL }}{{ order_details.product.main_image }}">
+                                                </td>
+                                                <td class="align-middle">
+                                                    <a href="{{ order_details.product.get_absolute_url }}"> {{ order_details.product.name }} </a>
+                                                </td>
+                                                <td class="align-middle">
+                                                    {{ order_details.product.quantity }} шт.
+                                                </td>
+                                                <td class="align-middle">
+                                                    ₴ {{ order_details.product.price }}
+                                                </td>
+                                            </tr>
                                         {% endfor %}
-                                    </div>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+                        </div>
                         {% endfor %}
                     </div>
                 </div>

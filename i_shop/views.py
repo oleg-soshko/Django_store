@@ -174,12 +174,25 @@ def user_logout(request):
 
 class UserMenuInfo(View):
     def get(self, request):
+        if not request.session.get('cart'):
+            request.session['cart'] = list()
+        cart_content = get_cart_content(request)
 
-        return render(request, 'i_shop/user_menu_info.html', {'user': request.user})
+        return render(request, 'i_shop/user_menu_info.html', {'user': request.user,
+                                                              'products': cart_content.products_in_cart,
+                                                              'to_pay': cart_content.to_pay,
+                                                              'quantity_in_cart': cart_content.quantity_in_cart})
 
 
 class UserMenuOrders(View):
     def get(self, request):
+        if not request.session.get('cart'):
+            request.session['cart'] = list()
+        cart_content = get_cart_content(request)
         orders = Order.objects.all()
 
-        return render(request, 'i_shop/user_menu_orders.html', {'user': request.user, 'orders': orders})
+        return render(request, 'i_shop/user_menu_orders.html', {'user': request.user,
+                                                                'orders': orders,
+                                                                'products': cart_content.products_in_cart,
+                                                                'to_pay': cart_content.to_pay,
+                                                                'quantity_in_cart': cart_content.quantity_in_cart})
