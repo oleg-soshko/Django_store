@@ -1,4 +1,7 @@
 # Django i-Shop
+![](https://img.shields.io/pypi/pyversions/django)
+![](https://img.shields.io/pypi/v/django?color=gre&label=django)
+
   Online store on Python
 ### 1. Installation
 
