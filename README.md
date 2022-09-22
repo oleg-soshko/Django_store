@@ -34,7 +34,7 @@ Go to `http://127.0.0.1:5000`
 
 ![1](/site_images/4.jpg)
 
-- #### Success order
+- ### Success order
 
 ![1](/site_images/5.jpg)
 
