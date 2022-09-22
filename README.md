@@ -21,27 +21,27 @@ python manage.py runserver
 
 Go to `http://127.0.0.1:5000`
 
-#### Main Page (with product categories)
+- ### Main Page (with product categories)
 
 ![1](/site_images/1.jpg)
 
-#### Products list
+- ### Products list
 
 ![1](/site_images/2.jpg)
 
-#### Product Card
+- ### Product Card
 
 ![1](/site_images/3.jpg)
 
-#### Cart
+- ### Cart
 
 ![1](/site_images/4.jpg)
 
-#### Success order
+- ### Success order
 
 ![1](/site_images/5.jpg)
 
-#### Modal cart
+- ### Modal cart
 
 ![1](/site_images/6.jpg)
 
