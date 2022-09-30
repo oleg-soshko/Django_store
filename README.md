@@ -7,7 +7,7 @@
 
 ```bash
 $ git clone https://github.com/oleg-soshko/django_store.git
-$ cd mysite
+$ cd django_store
 $ pip install -r requirements.txt
 ```
 
